@@ -11,6 +11,7 @@ import {
   removeFromCart,
   clearCart,
 } from "@handlers/cart-handlers";
+import { startCheckout, addContactNumber } from "@handlers/checkout-handlers";
 
 import { categoryEmoji, productEmoji } from "@utils/helpers/emojis";
 
@@ -29,6 +30,10 @@ bot.hears("Cart", showCartOptions);
 bot.hears("View Products", showCartProducts);
 
 bot.hears("Clear Cart", clearCart);
+
+bot.hears("Checkout", startCheckout);
+
+bot.on("message:contact", addContactNumber);
 
 bot.on("message:text", (ctx) => {
   const message = ctx.msg.text;
