@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "noImplicitReturns": true,
+    "noUnusedLocals": true,
+    "outDir": "lib",
+    "sourceMap": false,
+    "strict": true,
+    "target": "es2017",
+    "baseUrl": "./src",
+    "paths": {
+      "@utils/*": ["utils/*"],
+      "@handlers/*": ["handlers/*"],
+      "@routes/*": ["routes/*"],
+      "@cloud-events/*": ["cloud-events/*"]
+    }
+  },
+  "compileOnSave": true,
+  "include": ["src"]
+}
