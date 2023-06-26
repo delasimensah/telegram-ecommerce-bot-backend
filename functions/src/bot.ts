@@ -4,7 +4,13 @@ import * as dotenv from "dotenv";
 import { showHomeMenu } from "@handlers/home-handlers";
 import { showCategories } from "@handlers/category-handlers";
 import { showProducts, showProductDetails } from "@handlers/product-handlers";
-import { addToCart, showCartOptions } from "@handlers/cart-handlers";
+import {
+  addToCart,
+  showCartOptions,
+  showCartProducts,
+  removeFromCart,
+  clearCart,
+} from "@handlers/cart-handlers";
 
 import { categoryEmoji, productEmoji } from "@utils/helpers/emojis";
 
@@ -19,6 +25,10 @@ bot.hears("Home", showHomeMenu);
 bot.hears(["Products", "Categories", "Continue Shopping"], showCategories);
 
 bot.hears("Cart", showCartOptions);
+
+bot.hears("View Products", showCartProducts);
+
+bot.hears("Clear Cart", clearCart);
 
 bot.on("message:text", (ctx) => {
   const message = ctx.msg.text;
@@ -42,9 +52,9 @@ bot.on("callback_query:data", (ctx) => {
     addToCart(ctx, parseData);
   }
 
-  // if (parseData.id) {
-  //   removeFromCart(ctx, parseData.id);
-  // }
+  if (parseData.id) {
+    removeFromCart(ctx, parseData.id);
+  }
 
   // if (parseData.customerId) {
   //   addToCart(ctx, parseData.customerId);
