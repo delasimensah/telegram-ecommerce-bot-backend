@@ -80,21 +80,19 @@ export const showProductDetails = async (ctx: Context) => {
         "https://nayemdevs.com/wp-content/uploads/2020/03/default-product-image.png";
     }
 
-    return await Promise.all([
-      ctx.api.sendPhoto(chatId as number, photo),
-      ctx.api.sendMessage(
-        chatId as number,
-        `<b>${product.name}</b>
+    await ctx.api.sendPhoto(chatId as number, photo);
+    return await ctx.api.sendMessage(
+      chatId as number,
+      `<b>${product.name}</b>
 ${product?.description}
 `,
-        {
-          parse_mode: "HTML",
-          reply_markup: {
-            inline_keyboard: [...priceButtons],
-          },
-        }
-      ),
-    ]);
+      {
+        parse_mode: "HTML",
+        reply_markup: {
+          inline_keyboard: [...priceButtons],
+        },
+      }
+    );
   } catch (error: any) {
     console.log(error.message);
     return ctx.reply("Something went wrong. Try again");

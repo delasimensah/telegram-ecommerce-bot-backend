@@ -8,7 +8,7 @@ export type User = {
   paymentMethod?: string;
   deliveryLocation?: Location;
   contactNumber?: string;
-  createdAt?: Date;
+  createdAt?: string;
   blocked?: boolean;
 };
 
@@ -25,14 +25,14 @@ export type Product = {
   inStock: boolean;
   category: string;
   prices: Price[];
-  createdAt?: Date;
+  createdAt?: string;
 };
 
 export type Category = {
   id?: string;
   name: string;
   active?: boolean;
-  createdAt?: Date;
+  createdAt?: string;
 };
 
 export type Order = {
@@ -46,7 +46,7 @@ export type Order = {
   cancelled?: boolean;
   products: CartProduct[];
   total: number;
-  createdAt?: Date;
+  createdAt?: string;
 };
 
 export type CartProduct = {
@@ -62,13 +62,10 @@ export type Vendor = {
   chatSession: boolean;
   mobileMoneyNumber?: string;
   mobileMoneyName?: string;
-  createdAt?: Date;
+  createdAt?: string;
 };
 
 export type Location = {
   latitude: number;
   longitude: number;
 };
-
-// vendor ids
-// 1439724996 - ??

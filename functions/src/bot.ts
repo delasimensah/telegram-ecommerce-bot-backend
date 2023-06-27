@@ -55,15 +55,15 @@ bot.hears("Back To Payment Method", addDeliveryLocation);
 
 bot.hears(["Mobile Payment", "Cash Payment"], addPaymentMethod);
 
-bot.hears("Send Order", (ctx) => {
-  completeCheckout(ctx);
-  clearCart(ctx);
-  showHomeMenu(ctx);
+bot.hears("Send Order", async (ctx) => {
+  await completeCheckout(ctx);
+  await clearCart(ctx);
+  await showHomeMenu(ctx);
 });
 
-bot.hears("Cancel Order", (ctx) => {
-  cancelCheckout(ctx);
-  showCartOptions(ctx);
+bot.hears("Cancel Order", async (ctx) => {
+  await cancelCheckout(ctx);
+  await showCartOptions(ctx);
 });
 
 bot.on("message:contact", addContactNumber);

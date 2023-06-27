@@ -1,6 +1,6 @@
 import { db } from "@utils/fb-admin";
 import { Order } from "@utils/types";
-import { Timestamp } from "firebase-admin/firestore";
+// import { Timestamp } from "firebase-admin/firestore";
 
 export const getAllOrders = async () => {
   const ref = db.collection("orders");
@@ -24,7 +24,7 @@ export const createOrder = async (orderInfo: Order) => {
   const snapshot = await ref.add({
     ...orderInfo,
     products: [...orderInfo.products],
-    createdAt: Timestamp.fromDate(new Date()),
+    createdAt: new Date().toISOString(),
     cancelled: false,
     fulfilled: false,
   });
