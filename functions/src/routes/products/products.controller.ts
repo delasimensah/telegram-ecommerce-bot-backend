@@ -6,7 +6,7 @@ import {
   getProduct,
   updateProduct,
   deleteProduct,
-} from "@utils/db-queries/product-queries";
+} from "@db-queries/product-queries";
 
 export const httpCreateProduct = async (req: Request, res: Response) => {
   const product = req.body as Product;

@@ -4,7 +4,7 @@ import {
   getCartProducts,
   removeProductFromCart,
   clearAllProductFromCart,
-} from "@utils/db-queries/cart-queries";
+} from "@db-queries/cart-queries";
 import { CartProduct } from "@utils/types";
 import { calculateTotal } from "@utils/helpers/calculateTotal";
 import millify from "millify";

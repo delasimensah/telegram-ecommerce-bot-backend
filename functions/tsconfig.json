@@ -10,6 +10,7 @@
     "baseUrl": "./src",
     "paths": {
       "@utils/*": ["utils/*"],
+      "@db-queries/*": ["db-queries/*"],
       "@handlers/*": ["handlers/*"],
       "@routes/*": ["routes/*"],
       "@cloud-events/*": ["cloud-events/*"]

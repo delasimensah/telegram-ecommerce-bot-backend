@@ -1,6 +1,6 @@
 import type { Context } from "grammy";
 
-import { getActiveCategoryNames } from "@utils/db-queries/category-queries";
+import { getActiveCategoryNames } from "@db-queries/category-queries";
 
 const buttons = [{ text: "Cart" }, { text: "Home" }];
 

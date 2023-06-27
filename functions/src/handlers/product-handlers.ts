@@ -2,8 +2,8 @@ import type { Context } from "grammy";
 import {
   getCategoryProductNames,
   getProductInfo,
-} from "@utils/db-queries/product-queries";
-import { getCategoryInfo } from "@utils/db-queries/category-queries";
+} from "@db-queries/product-queries";
+import { getCategoryInfo } from "@db-queries/category-queries";
 import millify from "millify";
 
 const buttons = [{ text: "Cart" }, { text: "Categories" }];

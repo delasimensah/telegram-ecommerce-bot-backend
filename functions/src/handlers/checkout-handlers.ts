@@ -1,16 +1,16 @@
 import { Context } from "grammy";
+import millify from "millify";
 import {
   updateContactNumber,
   updateDeliveryLocation,
   updatePaymentMethod,
   getUserInfo,
   removeDeliveryInfo,
-} from "@utils/db-queries/user-queries";
-import { createOrder } from "@utils/db-queries/order-queries";
-import { getCartProducts } from "@utils/db-queries/cart-queries";
+} from "@db-queries/user-queries";
+import { createOrder } from "@db-queries/order-queries";
+import { getCartProducts } from "@db-queries/cart-queries";
 import { Location, User, Order } from "@utils/types";
 import { calculateTotal } from "@utils/helpers/calculateTotal";
-import millify from "millify";
 
 export const startCheckout = async (ctx: Context) => {
   try {

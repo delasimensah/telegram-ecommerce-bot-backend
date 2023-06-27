@@ -1,5 +1,5 @@
 import type { Context } from "grammy";
-import { createUser } from "@utils/db-queries/user-queries";
+import { createUser } from "@db-queries/user-queries";
 
 export const showHomeMenu = async (ctx: Context) => {
   const id = ctx.msg?.chat.id;

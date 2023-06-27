@@ -4,7 +4,7 @@ import { Timestamp } from "firebase-admin/firestore";
 
 export const getAllOrders = async () => {
   const ref = db.collection("orders");
-  const snapshot = await ref.get();
+  const snapshot = await ref.orderBy("createdAt", "desc").get();
 
   if (snapshot.empty) return [];
 

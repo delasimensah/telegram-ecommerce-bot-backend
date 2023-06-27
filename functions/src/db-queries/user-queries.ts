@@ -18,6 +18,8 @@ export const getAllUsers = async () => {
 
   return users;
 };
+// TODO: Block User;
+// TODO: Send User Message;
 
 // bot queries
 export const createUser = async (user: User) => {

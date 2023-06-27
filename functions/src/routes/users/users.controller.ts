@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { User } from "@utils/types";
 
-import { getAllUsers } from "@utils/db-queries/user-queries";
+import { getAllUsers } from "@db-queries/user-queries";
 
 export async function httpGetUsers(_: Request, res: Response) {
   try {

@@ -5,7 +5,7 @@ import {
   getCategory,
   deleteCategory,
   updateCategory,
-} from "@utils/db-queries/category-queries";
+} from "@db-queries/category-queries";
 import { Category } from "@utils/types";
 
 export const httpCreateCategory = async (req: Request, res: Response) => {
