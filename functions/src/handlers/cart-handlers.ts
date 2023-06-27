@@ -6,15 +6,8 @@ import {
   clearAllProductFromCart,
 } from "@utils/db-queries/cart-queries";
 import { CartProduct } from "@utils/types";
+import { calculateTotal } from "@utils/helpers/calculateTotal";
 import millify from "millify";
-
-const calculateTotal = (items: CartProduct[]) => {
-  const total = items.reduce((acc, { amount }) => {
-    return acc + amount;
-  }, 0);
-
-  return total;
-};
 
 const showReply = (items: CartProduct[]) => {
   const total = calculateTotal(items);
@@ -79,6 +72,7 @@ export const showCartOptions = async (ctx: Context) => {
           [{ text: "Checkout" }],
           [{ text: "Continue Shopping" }],
         ],
+        resize_keyboard: true,
       },
     });
   } catch (error) {

@@ -11,13 +11,25 @@ import {
   removeFromCart,
   clearCart,
 } from "@handlers/cart-handlers";
-import { startCheckout, addContactNumber } from "@handlers/checkout-handlers";
+import {
+  startCheckout,
+  addContactNumber,
+  addDeliveryLocation,
+  typePhoneNumber,
+  addPaymentMethod,
+  completeCheckout,
+  sendDifferentLocation,
+  cancelCheckout,
+} from "@handlers/checkout-handlers";
 
 import { categoryEmoji, productEmoji } from "@utils/helpers/emojis";
 
 dotenv.config();
 
 export const bot = new Bot(process.env.BOT_TOKEN || "");
+
+// TODO:use middleware to check if a user has been blocked
+// TODO:use middleware to create a user or update user info
 
 bot.command("start", showHomeMenu);
 
@@ -31,9 +43,36 @@ bot.hears("View Products", showCartProducts);
 
 bot.hears("Clear Cart", clearCart);
 
-bot.hears("Checkout", startCheckout);
+bot.hears(["Checkout", "Back To Contact Number"], startCheckout);
+
+bot.hears("Type Phone Number", typePhoneNumber);
+
+bot.hears("Back To Delivery Location", addContactNumber);
+
+bot.hears("Send Different Location", sendDifferentLocation);
+
+bot.hears("Back To Payment Method", addDeliveryLocation);
+
+bot.hears(["Mobile Payment", "Cash Payment"], addPaymentMethod);
+
+bot.hears("Send Order", (ctx) => {
+  completeCheckout(ctx);
+  clearCart(ctx);
+  showHomeMenu(ctx);
+});
+
+bot.hears("Cancel Order", (ctx) => {
+  cancelCheckout(ctx);
+  showCartOptions(ctx);
+});
 
 bot.on("message:contact", addContactNumber);
+
+bot.on("message:location", addDeliveryLocation);
+
+bot.on("message:voice", (ctx) => ctx.reply("Please do not send voice notes"));
+
+bot.on("message:photo", (ctx) => ctx.reply("Please do not send photos"));
 
 bot.on("message:text", (ctx) => {
   const message = ctx.msg.text;
@@ -44,6 +83,10 @@ bot.on("message:text", (ctx) => {
 
   if (message.includes(productEmoji)) {
     return showProductDetails(ctx);
+  }
+
+  if (message.startsWith("233")) {
+    return addContactNumber(ctx);
   }
 
   return ctx.reply("Use the options to communicate with me");

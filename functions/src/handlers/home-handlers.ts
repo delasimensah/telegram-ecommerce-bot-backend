@@ -22,7 +22,7 @@ export const showHomeMenu = async (ctx: Context) => {
         keyboard: [
           [{ text: "Products" }],
           [{ text: "Cart" }],
-          [{ text: "Chat" }],
+          // [{ text: "Chat" }],
         ],
         resize_keyboard: true,
       },

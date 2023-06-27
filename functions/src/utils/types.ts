@@ -6,12 +6,8 @@ export type User = {
   chatSession?: boolean;
   currency?: string;
   paymentMethod?: string;
-  location?: {
-    latitude: number;
-    longitude: number;
-  };
-  number?: string;
-  vendor?: boolean;
+  deliveryLocation?: Location;
+  contactNumber?: string;
   createdAt?: Date;
   blocked?: boolean;
 };
@@ -40,17 +36,14 @@ export type Category = {
 };
 
 export type Order = {
-  id: string | number;
+  id?: string | number;
   userId: string | number;
   username: string;
   contactNumber: string;
-  location: {
-    latitude: number;
-    longitude: number;
-  };
+  deliveryLocation: Location;
   paymentMethod: string;
-  fulfilled: boolean;
-  cancelled: boolean;
+  fulfilled?: boolean;
+  cancelled?: boolean;
   products: CartProduct[];
   total: number;
   createdAt?: Date;
@@ -70,6 +63,11 @@ export type Vendor = {
   mobileMoneyNumber?: string;
   mobileMoneyName?: string;
   createdAt?: Date;
+};
+
+export type Location = {
+  latitude: number;
+  longitude: number;
 };
 
 // vendor ids

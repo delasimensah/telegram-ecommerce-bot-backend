@@ -1,6 +1,6 @@
 import { db } from "@utils/fb-admin";
-import { User } from "@utils/types";
-import { Timestamp } from "firebase-admin/firestore";
+import { User, Location } from "@utils/types";
+import { Timestamp, FieldValue } from "firebase-admin/firestore";
 
 // api queries
 export const getAllUsers = async () => {
@@ -37,4 +37,55 @@ export const createUser = async (user: User) => {
   };
 
   await ref.set(userInfo);
+};
+
+export const getUserInfo = async (id: string) => {
+  const ref = db.collection("users").doc(id);
+  const snapshot = await ref.get();
+
+  if (!snapshot.exists) return;
+
+  const userInfo = { id: snapshot.id, ...snapshot.data() } as User;
+
+  return userInfo;
+};
+
+export const updateContactNumber = async (
+  id: string,
+  contactNumber: string
+) => {
+  const ref = db.collection("users").doc(id);
+  await ref.update({
+    contactNumber,
+  });
+};
+
+export const updateDeliveryLocation = async (
+  id: string,
+  location: Location
+) => {
+  const ref = db.collection("users").doc(id);
+  await ref.update({
+    deliveryLocation: location,
+  });
+};
+
+export const updatePaymentMethod = async (
+  id: string,
+  paymentMethod: string
+) => {
+  const ref = db.collection("users").doc(id);
+  await ref.update({
+    paymentMethod,
+  });
+};
+
+export const removeDeliveryInfo = async (id: string) => {
+  const ref = db.collection("users").doc(id);
+
+  await ref.update({
+    contactNumber: FieldValue.delete(),
+    deliveryLocation: FieldValue.delete(),
+    paymentMethod: FieldValue.delete(),
+  });
 };

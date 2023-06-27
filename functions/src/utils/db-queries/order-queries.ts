@@ -1,5 +1,6 @@
 import { db } from "@utils/fb-admin";
 import { Order } from "@utils/types";
+import { Timestamp } from "firebase-admin/firestore";
 
 export const getAllOrders = async () => {
   const ref = db.collection("orders");
@@ -16,19 +17,16 @@ export const getAllOrders = async () => {
   return orders;
 };
 
-export const createOrder = async () => {
-  // const { id, firstName, lastName, username } = user;
-  // const ref = db.collection("users").doc(`${id}`);
-  // const doc = await ref.get();
-  // // TODO:add created at field
-  // if (!doc.exists) {
-  //   const userInfo = {
-  //     id,
-  //     firstName,
-  //     lastName,
-  //     username,
-  //     chatSession: false,
-  //   };
-  //   await ref.set(userInfo);
-  // }
+export const createOrder = async (orderInfo: Order) => {
+  const ref = db.collection("orders");
+
+  const snapshot = await ref.add({
+    ...orderInfo,
+    products: [...orderInfo.products],
+    createdAt: Timestamp.fromDate(new Date()),
+    cancelled: false,
+    fulfilled: false,
+  });
+
+  return snapshot.id;
 };
