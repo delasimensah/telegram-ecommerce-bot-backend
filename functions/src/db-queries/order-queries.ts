@@ -10,6 +10,7 @@ export const getAllOrders = async () => {
 
   const orders = snapshot.docs.map((doc) => {
     return {
+      id: doc.id,
       ...doc.data(),
     } as Order;
   });
