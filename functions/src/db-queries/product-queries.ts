@@ -1,7 +1,6 @@
 import { db } from "@utils/fb-admin";
 import { Product } from "@utils/types";
 import { productEmoji } from "@utils/helpers/emojis";
-import { Timestamp } from "firebase-admin/firestore";
 
 // api queries
 export const createProduct = async (product: Product) => {
@@ -14,7 +13,7 @@ export const createProduct = async (product: Product) => {
   await ref.add({
     ...product,
     inStock: true,
-    createdAt: Timestamp.fromDate(new Date()),
+    createdAt: new Date().toISOString(),
   });
 };
 

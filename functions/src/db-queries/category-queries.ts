@@ -1,7 +1,6 @@
 import { db } from "@utils/fb-admin";
 import { Category } from "@utils/types";
 import { categoryEmoji } from "@utils/helpers/emojis";
-import { Timestamp } from "firebase-admin/firestore";
 
 // api queries
 export const createCategory = async (category: string) => {
@@ -14,7 +13,7 @@ export const createCategory = async (category: string) => {
   await ref.add({
     name: category,
     active: true,
-    createdAt: Timestamp.fromDate(new Date()),
+    createdAt: new Date().toISOString(),
   });
 };
 

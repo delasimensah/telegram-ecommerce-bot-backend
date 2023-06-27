@@ -1,6 +1,7 @@
 import { db } from "@utils/fb-admin";
 import { User, Location } from "@utils/types";
-import { Timestamp, FieldValue } from "firebase-admin/firestore";
+import { FieldValue } from "firebase-admin/firestore";
+import { getConfirmedOrders } from "./order-queries";
 
 // api queries
 export const getAllUsers = async () => {
@@ -9,17 +10,31 @@ export const getAllUsers = async () => {
 
   if (snapshot.empty) return [];
 
-  const users = snapshot.docs.map((doc) => {
-    return {
-      id: +doc.id,
-      ...doc.data(),
-    } as User;
-  });
+  const users = await Promise.all(
+    snapshot.docs.map(async (doc) => {
+      const orders = await getConfirmedOrders(doc.id);
+
+      const totalOrders = orders.length;
+      const amountSpent = orders.reduce((acc, { total }) => {
+        return acc + total;
+      }, 0);
+
+      return {
+        id: +doc.id,
+        totalOrders,
+        amountSpent,
+        ...doc.data(),
+      } as User;
+    })
+  );
 
   return users;
 };
-// TODO: Block User;
-// TODO: Send User Message;
+
+export const updateUser = async (id: string, blocked: { blocked: boolean }) => {
+  const ref = await db.collection("users").doc(id);
+  await ref.update(blocked);
+};
 
 // bot queries
 export const createUser = async (user: User) => {
@@ -35,7 +50,7 @@ export const createUser = async (user: User) => {
     lastName,
     username,
     chatSession: false,
-    createdAt: Timestamp.fromDate(new Date()),
+    createdAt: new Date().toISOString(),
   };
 
   await ref.set(userInfo);

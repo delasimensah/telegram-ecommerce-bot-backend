@@ -13,7 +13,16 @@ import { Location, User, Order } from "@utils/types";
 import { calculateTotal } from "@utils/helpers/calculateTotal";
 
 export const startCheckout = async (ctx: Context) => {
+  const id = ctx.msg?.chat.id;
+
   try {
+    const { contactNumber, deliveryLocation, paymentMethod } =
+      (await getUserInfo(`${id}`)) as User;
+
+    if (contactNumber || deliveryLocation || paymentMethod) {
+      await removeDeliveryInfo(`${id}`);
+    }
+
     return ctx.reply("Add a contact phone number", {
       reply_markup: {
         keyboard: [
@@ -196,17 +205,17 @@ export const completeCheckout = async (ctx: Context) => {
       total,
     } as Order;
 
-    const orderId = await createOrder(orderInfo);
-    await removeDeliveryInfo(`${id}`);
+    const { orderID, orderNumber } = await createOrder(orderInfo);
 
     let text = `
 Your order has been sent.
-Your <b><i>ORDER ID</i></b> is <b><i>${orderId}</i></b>
+Your <b><i>Order ID</i></b> is <b><i>${orderID}</i></b>
+Your <b><i>Order Number</i></b> is <b><i>${orderNumber}</i></b>
 
 <b>PLEASE NOTE:</b>
 1. A dispatch rider will call you to confirm your order, location and delivery charge.
 2. Please send your payment to <b>${momo}</b> on ${momoType} to confirm your order. Items will <b>NOT</b> be sent until payment is received
-3. Use your <b>ORDER ID</b> as the <b>Reference</b>.
+3. Use your <b>Order ID</b> or <b>Order Number</b>  as the <b>Reference</b>.
 4. Any errors on your part may result in you not receiving your order.
 5. For safety reasons, orders placed after 6pm may not be delivered until the next day.
 `;
@@ -214,7 +223,7 @@ Your <b><i>ORDER ID</i></b> is <b><i>${orderId}</i></b>
     if (paymentMethod !== "Mobile Payment") {
       text = `
 Your order has been sent.
-Your <b><i>ORDER ID</i></b> is <b><i>${orderId}</i></b>
+Your <b><i>ORDER ID</i></b> is <b><i>${orderID}</i></b>
 
 <b>PLEASE NOTE:</b>
 1. A dispatch rider will call you to confirm your order, location and delivery charge.

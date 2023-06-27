@@ -4,12 +4,13 @@ export type User = {
   lastName: string | null;
   username: string | null;
   chatSession?: boolean;
-  currency?: string;
   paymentMethod?: string;
   deliveryLocation?: Location;
   contactNumber?: string;
   createdAt?: string;
   blocked?: boolean;
+  totalOrders?: number;
+  amountSpent?: number;
 };
 
 export type Price = {
@@ -37,16 +38,17 @@ export type Category = {
 
 export type Order = {
   id?: string | number;
+  orderNumber?: number;
   userId: string | number;
   username: string;
   contactNumber: string;
   deliveryLocation: Location;
   paymentMethod: string;
-  fulfilled?: boolean;
-  cancelled?: boolean;
   products: CartProduct[];
   total: number;
   createdAt?: string;
+  paymentStatus: "paid" | "unpaid";
+  orderStatus: "pending" | "confirmed" | "cancelled";
 };
 
 export type CartProduct = {

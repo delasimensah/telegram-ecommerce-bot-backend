@@ -5,6 +5,7 @@ import {
   removeProductFromCart,
   clearAllProductFromCart,
 } from "@db-queries/cart-queries";
+import { removeDeliveryInfo } from "@db-queries/user-queries";
 import { CartProduct } from "@utils/types";
 import { calculateTotal } from "@utils/helpers/calculateTotal";
 import millify from "millify";
@@ -68,9 +69,9 @@ export const showCartOptions = async (ctx: Context) => {
       reply_markup: {
         keyboard: [
           [{ text: "View Products" }],
-          [{ text: "Clear Cart" }],
           [{ text: "Checkout" }],
           [{ text: "Continue Shopping" }],
+          [{ text: "Clear Cart" }],
         ],
         resize_keyboard: true,
       },
@@ -120,7 +121,8 @@ export const clearCart = async (ctx: Context) => {
 
   try {
     await clearAllProductFromCart(`${id}`);
-    return ctx.reply("Your cart has been cleared. Add some products");
+    await removeDeliveryInfo(`${id}`);
+    return ctx.reply("Your cart has been cleared.");
   } catch (error) {
     return ctx.reply("Something went wrong. Try again");
   }
