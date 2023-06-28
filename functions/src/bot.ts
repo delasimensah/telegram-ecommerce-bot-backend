@@ -20,24 +20,31 @@ import {
   completeCheckout,
   sendDifferentLocation,
   cancelCheckout,
+  addContactNumberNoLocation,
 } from "@handlers/checkout-handlers";
 
 import { categoryEmoji, productEmoji } from "@utils/helpers/emojis";
+
+import { checkBlocked, createOrUpdateUser, checkStoreStatus } from "middleware";
 
 dotenv.config();
 
 export const bot = new Bot(process.env.BOT_TOKEN || "");
 
-// TODO:use middleware to check if a user has been blocked
-// TODO:use middleware to create a user or update user info
+bot.use(checkStoreStatus);
+bot.use(createOrUpdateUser);
+bot.use(checkBlocked);
 
 bot.command("start", showHomeMenu);
 
 bot.hears("Home", showHomeMenu);
 
-bot.hears(["Products", "Categories", "Continue Shopping"], showCategories);
+bot.hears(
+  ["Products", "Categories", "Continue Shopping", "Start Again"],
+  showCategories
+);
 
-bot.hears("Cart", showCartOptions);
+bot.hears(["Cart", "Back To Cart"], showCartOptions);
 
 bot.hears("View Products", showCartProducts);
 
@@ -51,7 +58,7 @@ bot.hears("Back To Delivery Location", addContactNumber);
 
 bot.hears("Send Different Location", sendDifferentLocation);
 
-bot.hears("Back To Payment Method", addDeliveryLocation);
+bot.hears("Back To Payment Method", addContactNumberNoLocation);
 
 bot.hears(["Mobile Payment", "Cash Payment"], addPaymentMethod);
 
@@ -66,7 +73,7 @@ bot.hears("Cancel Order", async (ctx) => {
   await showCartOptions(ctx);
 });
 
-bot.on("message:contact", addContactNumber);
+bot.on("message:contact", addContactNumberNoLocation);
 
 bot.on("message:location", addDeliveryLocation);
 
@@ -86,7 +93,7 @@ bot.on("message:text", (ctx) => {
   }
 
   if (message.startsWith("233")) {
-    return addContactNumber(ctx);
+    return addContactNumberNoLocation(ctx);
   }
 
   return ctx.reply("Use the options to communicate with me");

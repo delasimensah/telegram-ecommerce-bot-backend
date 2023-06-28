@@ -38,23 +38,44 @@ export const updateUser = async (id: string, blocked: { blocked: boolean }) => {
 
 // bot queries
 export const createUser = async (user: User) => {
-  const { id, firstName, lastName, username } = user;
+  const { id, username: name } = user;
 
   const ref = db.collection("users").doc(id as string);
-  const doc = await ref.get();
+  const snapshot = await ref.get();
 
-  if (doc.exists) return;
+  if (snapshot.exists) {
+    const { blocked, username, createdAt } = {
+      id: snapshot.id,
+      ...snapshot.data(),
+    } as User;
+
+    if (
+      blocked === undefined ||
+      username === undefined ||
+      createdAt === undefined
+    ) {
+      return ref.update({
+        username: name,
+        createdAt: new Date().toISOString(),
+        blocked: false,
+        chatId: FieldValue.delete(),
+        currency: FieldValue.delete(),
+        lastName: FieldValue.delete(),
+        firstName: FieldValue.delete(),
+      });
+    }
+
+    return;
+  }
 
   const userInfo = {
-    firstName,
-    lastName,
-    username,
+    username: name,
     chatSession: false,
     createdAt: new Date().toISOString(),
     blocked: false,
   };
 
-  await ref.set(userInfo);
+  return await ref.set(userInfo);
 };
 
 export const getUserInfo = async (id: string) => {

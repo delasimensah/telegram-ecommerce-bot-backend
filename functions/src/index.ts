@@ -3,7 +3,7 @@ import { webhookCallback } from "grammy";
 import * as express from "express";
 import * as cors from "cors";
 
-import { bot } from "./bot";
+import { bot } from "bot";
 import { api } from "@routes/api";
 
 const app = express();
