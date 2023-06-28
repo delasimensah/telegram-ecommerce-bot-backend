@@ -28,6 +28,7 @@ export const showHomeMenu = async (ctx: Context) => {
       },
     });
   } catch (error) {
+    console.log(error);
     return ctx.reply("Something went wrong. Try again");
   }
 };

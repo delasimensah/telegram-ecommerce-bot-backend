@@ -27,6 +27,7 @@ export const httpGetProducts = async (_: Request, res: Response) => {
 
     res.status(200).json(products);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "an error occurred" });
   }
 };
@@ -39,6 +40,7 @@ export const httpGetProduct = async (req: Request, res: Response) => {
 
     res.status(200).json(product);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "an error occured" });
   }
 };
@@ -57,6 +59,7 @@ export const httpUpdateProduct = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: "product successfully updated" });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "an error occurred" });
   }
 };
@@ -69,6 +72,7 @@ export const httpDeleteProduct = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: "product successfully deleted" });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "an error occurred" });
   }
 };

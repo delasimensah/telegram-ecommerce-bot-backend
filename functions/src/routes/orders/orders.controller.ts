@@ -7,6 +7,7 @@ export async function httpGetOrders(_: Request, res: Response) {
 
     res.status(200).json(orders);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "an error" });
   }
 }
@@ -18,6 +19,7 @@ export async function httpGetOrder(req: Request, res: Response) {
 
     res.status(200).json(order);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "an error occured" });
   }
 }
@@ -35,6 +37,7 @@ export async function httpUpdateOrder(req: Request, res: Response) {
 
     res.status(200).json({ message: "order successfully updated" });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "an error occurred" });
   }
 }

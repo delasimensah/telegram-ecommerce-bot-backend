@@ -53,6 +53,7 @@ export const addToCart = async (ctx: Context, data: CartProduct) => {
 
     return ctx.answerCallbackQuery(`Added ${data.name} to cart`);
   } catch (error) {
+    console.log(error);
     return ctx.answerCallbackQuery(`Something went wrong. Try again`);
   }
 };
@@ -77,6 +78,7 @@ export const showCartOptions = async (ctx: Context) => {
       },
     });
   } catch (error) {
+    console.log(error);
     return ctx.reply("Something went wrong. Try again");
   }
 };
@@ -94,6 +96,7 @@ export const showCartProducts = async (ctx: Context) => {
       },
     });
   } catch (error) {
+    console.log(error);
     return ctx.reply("Something went wrong. Try again");
   }
 };
@@ -112,6 +115,7 @@ export const removeFromCart = async (ctx: Context, itemId: string) => {
       },
     });
   } catch (error) {
+    console.log(error);
     return ctx.answerCallbackQuery("Something went wrong. Try again");
   }
 };
@@ -124,6 +128,7 @@ export const clearCart = async (ctx: Context) => {
     await removeDeliveryInfo(`${id}`);
     return ctx.reply("Your cart has been cleared.");
   } catch (error) {
+    console.log(error);
     return ctx.reply("Something went wrong. Try again");
   }
 };

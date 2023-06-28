@@ -34,6 +34,7 @@ export const startCheckout = async (ctx: Context) => {
       },
     });
   } catch (error) {
+    console.log(error);
     return ctx.reply("Something went wrong. Try again");
   }
 };
@@ -47,6 +48,7 @@ export const typePhoneNumber = async (ctx: Context) => {
       },
     });
   } catch (error) {
+    console.log(error);
     return ctx.reply("Something went wrong. Try again");
   }
 };
@@ -74,6 +76,7 @@ export const addContactNumber = async (ctx: Context) => {
       },
     });
   } catch (error) {
+    console.log(error);
     return ctx.reply("Something went wrong. Try again");
   }
 };
@@ -93,6 +96,7 @@ export const sendDifferentLocation = async (ctx: Context) => {
       }
     );
   } catch (error) {
+    console.log(error);
     return ctx.reply("Something went wrong. Try again");
   }
 };
@@ -165,6 +169,7 @@ export const addPaymentMethod = async (ctx: Context) => {
       },
     });
   } catch (error) {
+    console.log(error);
     return ctx.reply("Something went wrong. Try again");
   }
 };
@@ -175,6 +180,7 @@ export const cancelCheckout = async (ctx: Context) => {
   try {
     return await removeDeliveryInfo(`${id}`);
   } catch (error) {
+    console.log(error);
     return ctx.reply("Something went wrong. Try again");
   }
 };
@@ -235,6 +241,7 @@ Your <b><i>ORDER ID</i></b> is <b><i>${orderID}</i></b>
 
     return ctx.reply(text, { parse_mode: "HTML" });
   } catch (error) {
+    console.log(error);
     console.log(error);
     return ctx.reply("Something went wrong. Try again");
   }

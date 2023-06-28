@@ -9,7 +9,8 @@ export async function httpGetUsers(_: Request, res: Response) {
 
     res.status(200).json(users);
   } catch (error) {
-    res.status(400).json({ message: "an error" });
+    console.log(error);
+    res.status(400).json({ message: "an error occurred" });
   }
 }
 
@@ -26,6 +27,7 @@ export const httpUpdateUser = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: "user successfully updated" });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "an error occurred" });
   }
 };

@@ -16,6 +16,7 @@ export const httpCreateCategory = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: "category created successfully" });
   } catch (error: any) {
+    console.log(error);
     res.status(400).json({ message: error.message });
   }
 };
@@ -26,6 +27,7 @@ export const httpGetCategories = async (_: Request, res: Response) => {
 
     res.status(200).json(categories);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "an error occured" });
   }
 };
@@ -37,6 +39,7 @@ export const httpGetCategory = async (req: Request, res: Response) => {
 
     res.status(200).json(category);
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "an error occured" });
   }
 };
@@ -55,6 +58,7 @@ export const httpUpdateCategory = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: "category successfully updated" });
   } catch (error) {
+    console.log(error);
     res.status(400).json({ message: "an error occurred" });
   }
 };
@@ -67,6 +71,7 @@ export const httpDeleteCategory = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: "category successfully deleted" });
   } catch (error: any) {
+    console.log(error);
     res.status(400).json({ message: error.message });
   }
 };
