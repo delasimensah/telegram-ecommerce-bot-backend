@@ -55,6 +55,8 @@ export const showProductDetails = async (ctx: Context) => {
       return ctx.reply("This product is not in stock");
     }
 
+    let photo = product.photo;
+
     const priceButtons = product.prices.map(
       (price: { quantity: number; amount: number }) => [
         {
@@ -66,14 +68,13 @@ export const showProductDetails = async (ctx: Context) => {
           )}`,
           callback_data: JSON.stringify({
             name: product.name,
+            photo,
             quantity: price.quantity,
             amount: price.amount,
           }),
         },
       ]
     );
-
-    let photo = product.photo;
 
     if (product.photo.includes("http://127.0.0.1:9199")) {
       photo =

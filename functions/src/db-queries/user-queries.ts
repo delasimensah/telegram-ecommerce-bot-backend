@@ -51,6 +51,7 @@ export const createUser = async (user: User) => {
     username,
     chatSession: false,
     createdAt: new Date().toISOString(),
+    blocked: false,
   };
 
   await ref.set(userInfo);

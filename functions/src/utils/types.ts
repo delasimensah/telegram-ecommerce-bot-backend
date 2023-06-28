@@ -53,6 +53,7 @@ export type Order = {
 
 export type CartProduct = {
   id?: string;
+  photo?: string;
   name: string;
   quantity: number;
   amount: number;

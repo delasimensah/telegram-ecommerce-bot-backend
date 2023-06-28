@@ -55,3 +55,27 @@ export const createOrder = async (orderInfo: Order) => {
 
   return { orderID: snapshot.id, orderNumber };
 };
+
+export const getOrder = async (id: string) => {
+  const ref = db.collection("orders").doc(id);
+  const snapshot = await ref.get();
+
+  if (!snapshot.exists) return;
+
+  const order = { id: snapshot.id, ...snapshot.data() } as Order;
+
+  return order;
+};
+
+export const updateOrder = async (
+  id: string,
+  order: {
+    orderStatus: "paid" | "unpaid";
+    paymentStatus: "pending" | "confirmed" | "cancelled";
+  }
+) => {
+  const ref = db.collection("orders").doc(id);
+  await ref.update({
+    ...order,
+  });
+};
