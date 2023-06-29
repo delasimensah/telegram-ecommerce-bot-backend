@@ -37,12 +37,9 @@ bot.use(checkBlocked);
 
 bot.command("start", showHomeMenu);
 
-bot.hears("Home", showHomeMenu);
+bot.hears(["Home", "Start Again"], showHomeMenu);
 
-bot.hears(
-  ["Products", "Categories", "Continue Shopping", "Start Again"],
-  showCategories
-);
+bot.hears(["Products", "Categories", "Continue Shopping"], showCategories);
 
 bot.hears(["Cart", "Back To Cart"], showCartOptions);
 
