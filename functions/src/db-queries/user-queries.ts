@@ -38,38 +38,15 @@ export const updateUser = async (id: string, blocked: { blocked: boolean }) => {
 
 // bot queries
 export const createUser = async (user: User) => {
-  const { id, username: name } = user;
+  const { id, username } = user;
 
   const ref = db.collection("users").doc(id as string);
   const snapshot = await ref.get();
 
-  if (snapshot.exists) {
-    const { blocked, username, createdAt } = {
-      id: snapshot.id,
-      ...snapshot.data(),
-    } as User;
-
-    if (
-      blocked === undefined ||
-      username === undefined ||
-      createdAt === undefined
-    ) {
-      return ref.update({
-        username: name,
-        createdAt: new Date().toISOString(),
-        blocked: false,
-        chatId: FieldValue.delete(),
-        currency: FieldValue.delete(),
-        lastName: FieldValue.delete(),
-        firstName: FieldValue.delete(),
-      });
-    }
-
-    return;
-  }
+  if (snapshot.exists) return;
 
   const userInfo = {
-    username: name || null,
+    username,
     chatSession: false,
     createdAt: new Date().toISOString(),
     blocked: false,

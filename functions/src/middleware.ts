@@ -49,6 +49,7 @@ export const checkStoreStatus = async (ctx: Context, next: NextFunction) => {
     return ctx.reply("The store is down for maintenance", {
       reply_markup: {
         keyboard: [[{ text: "Start Again" }]],
+        resize_keyboard: true,
       },
     });
   } catch (error) {
