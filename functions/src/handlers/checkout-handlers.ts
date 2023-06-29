@@ -223,7 +223,9 @@ export const completeCheckout = async (ctx: Context) => {
   try {
     const user = (await getUserInfo(`${id}`)) as User;
     const cart = await getCartProducts(`${id}`);
-    const vendorInfo = (await getVendorInfo()) as Vendor;
+    const vendorInfo = (await getVendorInfo(
+      process.env.SHOP_ID as string
+    )) as Vendor;
 
     const total = calculateTotal(cart);
 

@@ -1,16 +1,23 @@
 import { db } from "@utils/fb-admin";
 import { Vendor } from "@utils/types";
 
-export const getVendorInfo = async () => {
-  const ref = db.collection("vendors");
+export const getVendorInfo = async (id: string) => {
+  const ref = db.collection("vendors").doc(id);
   const snapshot = await ref.get();
 
-  if (snapshot.empty) return;
+  if (!snapshot.exists) return;
 
   const vendorInfo = {
-    id: snapshot.docs[0].id,
-    ...snapshot.docs[0].data(),
+    id: snapshot.id,
+    ...snapshot.data(),
   } as Vendor;
 
   return vendorInfo;
+};
+
+export const updateVendor = async (id: string, details: Vendor) => {
+  const ref = db.collection("vendors").doc(id);
+  await ref.update({
+    ...details,
+  });
 };

@@ -69,7 +69,7 @@ export const createUser = async (user: User) => {
   }
 
   const userInfo = {
-    username: name,
+    username: name || null,
     chatSession: false,
     createdAt: new Date().toISOString(),
     blocked: false,

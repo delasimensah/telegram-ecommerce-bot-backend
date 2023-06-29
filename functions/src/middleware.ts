@@ -38,7 +38,9 @@ export const createOrUpdateUser = async (ctx: Context, next: NextFunction) => {
 
 export const checkStoreStatus = async (ctx: Context, next: NextFunction) => {
   try {
-    const vendorInfo = (await getVendorInfo()) as Vendor;
+    const vendorInfo = (await getVendorInfo(
+      process.env.SHOP_ID as string
+    )) as Vendor;
 
     if (vendorInfo?.active) {
       return await next();
