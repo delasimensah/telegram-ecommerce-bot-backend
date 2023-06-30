@@ -21,9 +21,18 @@ export const httpCreateProduct = async (req: Request, res: Response) => {
   }
 };
 
-export const httpGetProducts = async (_: Request, res: Response) => {
+export const httpGetProducts = async (req: Request, res: Response) => {
+  const start = req.query._start;
+  const end = req.query._end;
+
   try {
-    const products = await getAllProducts();
+    const { products, count } = (await getAllProducts(
+      start as string,
+      end as string
+    )) as { products: Product[]; count: number };
+
+    res.header("x-total-count", `${count}`);
+    res.header("Access-Control-Expose-Headers", "x-total-count");
 
     res.status(200).json(products);
   } catch (error) {

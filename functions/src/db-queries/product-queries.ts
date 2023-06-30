@@ -28,9 +28,21 @@ export const getProduct = async (id: string) => {
   return product;
 };
 
-export const getAllProducts = async () => {
+export const getAllProducts = async (start: string, end: string) => {
+  const pageSize = +end - +start;
+  const currentPage = +end / pageSize;
+  const startIndex = (currentPage - 1) * pageSize;
+
   const ref = db.collection("products");
-  const snapshot = await ref.orderBy("createdAt", "desc").get();
+  const count = (await ref.count().get()).data().count;
+  const allSnapshots = await ref.orderBy("createdAt", "desc").get();
+  const startSnaphot = allSnapshots.docs[startIndex];
+
+  const snapshot = await ref
+    .orderBy("createdAt", "desc")
+    .startAt(startSnaphot)
+    .limit(pageSize)
+    .get();
 
   if (snapshot.empty) return [];
 
@@ -41,7 +53,7 @@ export const getAllProducts = async () => {
     } as Product;
   });
 
-  return products;
+  return { products, count };
 };
 
 export const updateProduct = async (id: string, product: Product) => {
